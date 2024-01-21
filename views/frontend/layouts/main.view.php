@@ -12,7 +12,7 @@
 <body>
     <header>
         <h1>Ein eigenes CMS</h1>
-        <p>Hier finden Sie eine schöne Wetter-App</p>
+        <p>Content Management System</p>
     </header>
     <main>
         <?php echo $content; ?>

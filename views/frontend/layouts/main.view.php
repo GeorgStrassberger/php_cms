@@ -13,6 +13,11 @@
     <header>
         <h1>Ein eigenes CMS</h1>
         <p>Content Management System</p>
+        <nav>
+            <?php foreach($navigation AS $navigationElement):  ?>
+                <a href="index.php?<?php echo http_build_query(['page' => $navigationElement->slug]) ?>"><?php echo e($navigationElement->title); ?></a>
+            <?php endforeach; ?>
+        </nav>
     </header>
     <main>
         <?php echo $content; ?>

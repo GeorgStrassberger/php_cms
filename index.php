@@ -13,7 +13,9 @@ if ($route === 'page'){
     $pagesController->showPage($page);
 }else{
     // var_dump("Hier gebe die Fehlerseite aus (Error 404)");
-    $notFoundController = new \App\Controller\NotFoundController();
+    $notFoundController = new \App\Controller\NotFoundController(
+        new \App\Pages\PagesRepository($pdo)
+    );
     $notFoundController->error404();
 }
 

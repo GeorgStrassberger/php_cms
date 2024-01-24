@@ -4,8 +4,13 @@ namespace App\Controller;
 
 abstract class AbstractController
 {
-    protected function render($path, array $data = []): void
+
+    protected function showError404()
     {
+        http_response_code(404);
+        $this->render("abstract/showError404", []);
+    }
+    protected function render($path, array $data = []) {
         ob_start();
         extract($data);
         require __DIR__ . '/../../views/frontend/' . $path . '.view.php';
@@ -14,4 +19,6 @@ abstract class AbstractController
 
         require __DIR__ . '/../../views/frontend/layouts/main.view.php';
     }
+
+
 }

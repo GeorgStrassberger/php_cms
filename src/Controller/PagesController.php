@@ -6,14 +6,16 @@ use App\Pages\PagesRepository;
 
 class PagesController extends AbstractController
 {
-    protected PagesRepository $pagesRepository;
-    public function __construct(PagesRepository $pagesRepository)
-    {
-        $this->pagesRepository = $pagesRepository;
-    }
-    public function showPage(string $pageKey):void
-    {
+    public function __construct(protected PagesRepository $pagesRepository) {}
+
+    public function showPage(string $pageKey) {
+
         $page = $this->pagesRepository->fetchPage($pageKey);
+
+        if (empty($page)){
+            return $this->showError404();
+        }
+
         $this->render('pages/showPage', [
             'page' => $page
         ]);

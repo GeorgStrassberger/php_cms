@@ -1,5 +1,7 @@
 <h1>Admin: Seiten verwalten</h1>
-
+<hr>
+<a href=".?route=admin/page/create">Neue Seite anlegen</a>
+<hr>
 <?php if (!empty($pages)) : ?>
     <table>
         <thead>

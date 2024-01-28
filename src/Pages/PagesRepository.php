@@ -35,4 +35,24 @@ class PagesRepository
             return $entry;
         }
     }
+
+    public function create(string $title, string $slug, string $content): bool
+    {
+        // Wenn der Slug schon existiert brich ab.
+        $existsStmt = $this->pdo->prepare('SELECT COUNT(*) AS c FROM `pages` WHERE `slug` = :slug');
+        $existsStmt->bindValue(':slug', $slug);
+        $existsStmt->setFetchMode(PDO::FETCH_ASSOC);
+        $existsStmt->execute();
+        $existsValue = $existsStmt->fetch();
+        if (empty($existsValue) || $existsValue['c'] != 0) {
+            return false;
+        }
+        // Eingabe speichern
+        $stmt = $this->pdo->prepare('INSERT INTO `pages` (title, slug, content) VALUES (:title, :slug, :content)');
+        $stmt->bindValue(':title', $title);
+        $stmt->bindValue(':slug', $slug);
+        $stmt->bindValue(':content', $content);
+        $stmt->execute();
+        return true;
+    }
 }

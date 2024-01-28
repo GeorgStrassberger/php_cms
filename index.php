@@ -12,6 +12,9 @@ $container->add('pagesRepository', function () use ($container) {
 $container->add('pagesController', function () use ($container) {
     return new \App\Controller\PagesController($container->get('pagesRepository'));
 });
+$container->add('pagesAdminController', function () use ($container) {
+    return new \App\Controller\Admin\PagesAdminController($container->get('pagesRepository'));
+});
 $container->add('notFoundController', function () use ($container) {
     return new \App\Controller\NotFoundController($container->get('pagesRepository'));
 });
@@ -23,6 +26,9 @@ if ($route === 'page') {
     $pagesController = $container->get('pagesController');
     $page = @(string) ($_GET['page'] ?? 'index');
     $pagesController->showPage($page);
+} else if ($route === 'admin/page') {
+    $pagesAdminController = $container->get('pagesAdminController');
+    $pagesAdminController->index();
 } else {
     $notFoundController = $container->get('notFoundController');
     $notFoundController->error404();

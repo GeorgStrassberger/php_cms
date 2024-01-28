@@ -13,13 +13,9 @@
 
 <body>
     <header>
-        <h1>Ein eigenes CMS</h1>
-        <p>Content Management System</p>
-        <nav>
-            <?php foreach ($navigation as $navigationElement) :  ?>
-                <a href="index.php?<?php echo http_build_query(['route' => $navigationElement->slug]) ?>"><?php echo e($navigationElement->title); ?></a>
-            <?php endforeach; ?>
-        </nav>
+        <h1>CMS Admin bereich</h1>
+        <p>Das hier ist der Adminbereich</p>
+        <?php /* <nav></nav> */ ?>
     </header>
     <main>
         <?php echo $content; ?>

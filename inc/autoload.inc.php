@@ -1,4 +1,5 @@
 <?php
+
 /**
  * An example of a project-specific implementation.
  *

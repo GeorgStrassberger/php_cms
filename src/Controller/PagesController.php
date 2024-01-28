@@ -4,17 +4,20 @@ namespace App\Controller;
 
 use App\Pages\PagesRepository;
 
-class PagesController extends AbstractController{
+class PagesController extends AbstractController
+{
 
-    public function __construct(protected PagesRepository $pagesRepository){
+    public function __construct(protected PagesRepository $pagesRepository)
+    {
         parent::__construct($this->pagesRepository);
     }
 
-    public function showPage(string $pageKey) {
+    public function showPage(string $pageKey)
+    {
 
         $page = $this->pagesRepository->fetchPage($pageKey);
 
-        if (empty($page)){
+        if (empty($page)) {
             return $this->showError404();
         }
 

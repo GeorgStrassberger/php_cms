@@ -55,4 +55,34 @@ class PagesRepository
         $stmt->execute();
         return true;
     }
+
+    public function delete(int $id)
+    {
+        $stmt = $this->pdo->prepare('DELETE FROM `pages` WHERE id=:id');
+        $stmt->bindValue('id', $id);
+        $stmt->execute();
+    }
+
+    public function findById(int $id): ?PagesModel
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM `pages` WHERE `id` = :id');
+        $stmt->bindValue(':id', $id);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, PagesModel::class);
+        $stmt->execute();
+        $entry = $stmt->fetch();
+        if (empty($entry)) {
+            return null;
+        } else {
+            return $entry;
+        }
+    }
+
+    public function updateTitleAndContent(int $id, string $title, string $content)
+    {
+        $stmt = $this->pdo->prepare('UPDATE `pages` SET `title` = :title, `content` = :content WHERE `id` = :id');
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':title', $title);
+        $stmt->bindValue(':content', $content);
+        $stmt->execute();
+    }
 }

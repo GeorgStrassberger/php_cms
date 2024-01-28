@@ -41,4 +41,34 @@ class PagesAdminController extends AbstractController
             $this->renderAdmin('pages/create', []);
         }
     }
+
+    public function delete(int $id)
+    {
+        $this->pagesRepository->delete($id);
+        header('Location: ./?route=admin/page');
+    }
+
+    public function edit(int $id)
+    {
+        if (!empty($_POST)) {
+            $title = @(string) ($_POST['title'] ?? '');
+            $content = @(string) ($_POST['content'] ?? '');
+
+            if (!empty($title) && !empty($content)) {
+                $this->pagesRepository->updateTitleAndContent($id, $title, $content);
+                header("Location: ./?route=admin/page");
+                return;
+            }
+            $page = $this->pagesRepository->findById($id);
+            $this->renderAdmin('pages/edit', [
+                'page' => $page,
+                'error' => 'Es ist ein Fehler aufgeteten.'
+            ]);
+        } else {
+            $page = $this->pagesRepository->findById($id);
+            $this->renderAdmin('pages/edit', [
+                'page' => $page
+            ]);
+        }
+    }
 }

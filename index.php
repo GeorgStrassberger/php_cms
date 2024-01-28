@@ -32,6 +32,14 @@ if ($route === 'page') {
 } else if ($route === 'admin/page/create') {
     $pagesAdminController = $container->get('pagesAdminController');
     $pagesAdminController->create();
+} else if ($route === 'admin/page/delete') {
+    $pagesAdminController = $container->get('pagesAdminController');
+    $id = @(int) ($_POST['id'] ?? 0);
+    $pagesAdminController->delete($id);
+} else if ($route === 'admin/page/edit') {
+    $pagesAdminController = $container->get('pagesAdminController');
+    $id = @(int) ($_GET['id'] ?? 0);
+    $pagesAdminController->edit($id);
 } else {
     $notFoundController = $container->get('notFoundController');
     $notFoundController->error404();

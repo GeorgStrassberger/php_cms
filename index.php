@@ -20,8 +20,12 @@ $container->add('notFoundController', function () use ($container) {
 });
 $container->add('loginController', function () use ($container) {
     return new \App\Controller\Admin\LoginController(
-        $container->get('pagesRepository')
+        $container->get('pagesRepository'),
+        $container->get('authService')
     );
+});
+$container->add('authService', function () use ($container) {
+    return new \App\Support\AuthService($container->get('pdo'));
 });
 
 
@@ -52,7 +56,3 @@ if ($route === 'page') {
     $notFoundController = $container->get('notFoundController');
     $notFoundController->error404();
 }
-
-// $password = password_hash('admin', PASSWORD_BCRYPT);
-
-// var_dump($password);

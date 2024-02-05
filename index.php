@@ -18,6 +18,11 @@ $container->add('pagesAdminController', function () use ($container) {
 $container->add('notFoundController', function () use ($container) {
     return new \App\Controller\NotFoundController($container->get('pagesRepository'));
 });
+$container->add('loginController', function () use ($container) {
+    return new \App\Controller\Admin\LoginController(
+        $container->get('pagesRepository')
+    );
+});
 
 
 $route = @(string) ($_GET['route'] ?? 'page'); // $page = isset($_GET['page']) ? $_GET['page'] : 'index';
@@ -26,6 +31,9 @@ if ($route === 'page') {
     $pagesController = $container->get('pagesController');
     $page = @(string) ($_GET['page'] ?? 'index');
     $pagesController->showPage($page);
+} else if ($route === 'admin/login') {
+    $loginController = $container->get('loginController');
+    $loginController->login();
 } else if ($route === 'admin/page') {
     $pagesAdminController = $container->get('pagesAdminController');
     $pagesAdminController->index();
@@ -44,3 +52,7 @@ if ($route === 'page') {
     $notFoundController = $container->get('notFoundController');
     $notFoundController->error404();
 }
+
+// $password = password_hash('admin', PASSWORD_BCRYPT);
+
+// var_dump($password);

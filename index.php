@@ -29,7 +29,7 @@ $container->add('authService', function () use ($container) {
 });
 
 
-$route = @(string) ($_GET['route'] ?? 'page'); // $page = isset($_GET['page']) ? $_GET['page'] : 'index';
+$route = @(string) ($_GET['route'] ?? 'page'); // $page = isset($_GET['page']) ? $_GET['page'] : 'page';
 
 if ($route === 'page') {
     $pagesController = $container->get('pagesController');
@@ -38,17 +38,32 @@ if ($route === 'page') {
 } else if ($route === 'admin/login') {
     $loginController = $container->get('loginController');
     $loginController->login();
+} else if ($route === 'admin/logout') {
+    $loginController = $container->get('loginController');
+    $loginController->logout();
 } else if ($route === 'admin/page') {
+    $authService = $container->get('authService');
+    $authService->ensureLogin();
+
     $pagesAdminController = $container->get('pagesAdminController');
     $pagesAdminController->index();
 } else if ($route === 'admin/page/create') {
+    $authService = $container->get('authService');
+    $authService->ensureLogin();
+
     $pagesAdminController = $container->get('pagesAdminController');
     $pagesAdminController->create();
 } else if ($route === 'admin/page/delete') {
+    $authService = $container->get('authService');
+    $authService->ensureLogin();
+
     $pagesAdminController = $container->get('pagesAdminController');
     $id = @(int) ($_POST['id'] ?? 0);
     $pagesAdminController->delete($id);
 } else if ($route === 'admin/page/edit') {
+    $authService = $container->get('authService');
+    $authService->ensureLogin();
+
     $pagesAdminController = $container->get('pagesAdminController');
     $id = @(int) ($_GET['id'] ?? 0);
     $pagesAdminController->edit($id);

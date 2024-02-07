@@ -32,6 +32,12 @@ class LoginController extends AbstractController
             $this->renderAdmin('login/login', []);
         }
     }
+
+    public function logout()
+    {
+        $this->authService->logout();
+        header("Location: ./?route=admin/login");
+    }
 }
 
 // username = 'admin';
